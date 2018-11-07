@@ -28,6 +28,17 @@
             id="tr.org.liderahenk.liderconsole.commands.DeleteAgent"            
             name="%command.task.delete">
       </command>
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.AddOu"            
+            name="%command.task.addou">
+      </command>
+      
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.AddUser"            
+            name="%command.task.adduser">
+      </command>
    </extension>
    
    <extension
@@ -88,6 +99,17 @@
        <handler
             class="tr.org.liderahenk.ldap.handlers.DeleteAgentHandler"
             commandId="tr.org.liderahenk.liderconsole.commands.DeleteAgent">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.AddOuHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.AddOu">
+             
+      </handler>
+      
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.AddUserHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.AddUser">
              
       </handler>
       

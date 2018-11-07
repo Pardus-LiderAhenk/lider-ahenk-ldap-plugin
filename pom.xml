@@ -80,6 +80,8 @@
 	<modules>
 		<module>lider-ldap</module>
 		<module>lider-ldap-db</module>
+		<module>lider-console-ldap</module>
+		<module>lider-console-ldap-feature</module>
 		<module>lider-ldap-feature</module>
 		<module>ahenk-ldap</module>
 	</modules>

@@ -1,0 +1,9 @@
+3c3260b124c9bfa19eb22af1b9604274  opt/ahenk/plugins/ldap/init.py
+5600c082c5fd4005cbfe34befd4412e3  opt/ahenk/plugins/ldap/login.py
+676a180eaf84babe8131274f7680e3c8  opt/ahenk/plugins/ldap/logout.py
+45619ab4a5e4807a981030488d80f6fc  opt/ahenk/plugins/ldap/main.py
+2613e05c313fec8cef382cd53513fd9a  opt/ahenk/plugins/ldap/policy.py
+53ba59fa72fc042c8a599541f1f3f054  opt/ahenk/plugins/ldap/safe.py
+ce14a9c1fe208d356f047810c4bcb6e5  opt/ahenk/plugins/ldap/shutdown.py
+f989c0a87519e3d461fc94e4104dbc5b  opt/ahenk/plugins/ldap/task_command_id.py
+993c65b981705d14d614e9e9768a421b  usr/share/doc/ahenk-ldap/changelog.gz

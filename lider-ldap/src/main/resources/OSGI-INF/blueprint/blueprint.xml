@@ -61,12 +61,28 @@
 		<property name="agentDao" ref="agentDao" />
 		<property name="configurationService" ref="configurationService" />
 	</bean>
+	
+	<!-- ICommand implementation is used to process a task execution -->
+	<service ref="addOu" interface="tr.org.liderahenk.lider.core.api.plugin.ICommand" />
+	<bean id="addOu" class="tr.org.liderahenk.ldap.commands.AddOuCommand">
+		<property name="resultFactory" ref="resultFactory" />
+		<property name="pluginInfo" ref="pluginInfoImpl" />
+		<property name="logService" ref="logService" />
+		<property name="ldapService" ref="ldapService" />
+	</bean>
+	<!-- ICommand implementation is used to process a task execution -->
+	<service ref="addUser" interface="tr.org.liderahenk.lider.core.api.plugin.ICommand" />
+	<bean id="addUser" class="tr.org.liderahenk.ldap.commands.AddUserCommand">
+		<property name="resultFactory" ref="resultFactory" />
+		<property name="pluginInfo" ref="pluginInfoImpl" />
+		<property name="logService" ref="logService" />
+		<property name="ldapService" ref="ldapService" />
+	</bean>
 
 	<reference id="pluginDbService" interface="tr.org.liderahenk.lider.core.api.persistence.IPluginDbService" />
 	<reference id="logService" interface="tr.org.liderahenk.lider.core.api.log.IOperationLogService" />
 	<reference id="resultFactory" interface="tr.org.liderahenk.lider.core.api.service.ICommandResultFactory" />
 	<reference id="agentDao"	interface="tr.org.liderahenk.lider.core.api.persistence.dao.IAgentDao" />
 	<reference id="ldapService"	interface="tr.org.liderahenk.lider.core.api.ldap.ILDAPService" />
-	<reference id="configurationService"
-		interface="tr.org.liderahenk.lider.core.api.configuration.IConfigurationService" />
+	<reference id="configurationService"	interface="tr.org.liderahenk.lider.core.api.configuration.IConfigurationService" />
 </blueprint>
