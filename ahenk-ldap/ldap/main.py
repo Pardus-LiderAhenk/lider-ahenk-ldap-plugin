@@ -1,5 +1,16 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 def info():
-    return None
+    inf = dict()
+    inf['name'] = 'lider-core'
+    inf['version'] = '1.0.0'
+    inf['support'] = 'debian'
+    inf['description'] = ''
+    inf['task'] = True
+    inf['user_oriented'] = True
+    inf['machine_oriented'] = True
+    inf['developer'] = 'muhammededip.yildiz@tubitak.gov.tr'
+
+    return inf

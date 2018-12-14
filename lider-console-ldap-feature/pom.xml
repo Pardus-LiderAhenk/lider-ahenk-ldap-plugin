@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>lider-console-ldap-feature</artifactId>
-	<name>lider-console-remote-access-feature</name>
+	<name>lider-console-ldap-feature</name>
 
 	<packaging>eclipse-feature</packaging>
 

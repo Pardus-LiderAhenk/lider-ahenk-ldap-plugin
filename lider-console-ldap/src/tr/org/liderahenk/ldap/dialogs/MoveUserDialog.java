@@ -8,9 +8,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -24,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import tr.org.liderahenk.ldap.constants.LdapConstants;
 import tr.org.liderahenk.ldap.i18n.Messages;
 import tr.org.liderahenk.liderconsole.core.dialogs.DefaultLiderDialog;
+import tr.org.liderahenk.liderconsole.core.dialogs.LiderLdapTreeDialog;
 import tr.org.liderahenk.liderconsole.core.ldap.enums.DNType;
 import tr.org.liderahenk.liderconsole.core.rest.enums.RestResponseStatus;
 import tr.org.liderahenk.liderconsole.core.rest.requests.TaskRequest;
@@ -37,31 +43,28 @@ import tr.org.liderahenk.liderconsole.core.widgets.NotifierColorsFactory.Notifie
  * Task execution dialog for ldap plugin.
  * 
  */
-public class AddUserDialog extends DefaultLiderDialog {
+public class MoveUserDialog extends DefaultLiderDialog {
 
 	
-	private static final Logger logger = LoggerFactory.getLogger(AddUserDialog.class);
+	private static final Logger logger = LoggerFactory.getLogger(MoveUserDialog.class);
 	
 	
 	private String dn;
 	
-	private Text textName;
-	private Text textSurname;
+	private Label lblInfo;
+	
+	
+	private Combo combo;
+
+	private Button btnParent;
+
+	private Button btnOpenLiderTree;
+
+	
 	private ProgressBar progressBar;
 
-
-	private Text textUid;
-
-
-	private Text textGid;
-
-
-	private Text textUidNumber;
-
-
-	private Text textPassword;
 	
-	public AddUserDialog(Shell parentShell, String dn) {
+	public MoveUserDialog(Shell parentShell, String dn) {
 		super(parentShell);
 		this.dn=dn;
 	}
@@ -73,69 +76,50 @@ public class AddUserDialog extends DefaultLiderDialog {
 	
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(Messages.getString("add_user"));
+		shell.setText(Messages.getString("delete"));
 	}
 	
 	
 	public Control createDialogArea(Composite parent) {
+		
 
 		Composite composite = new Composite(parent, SWT.BORDER);
-		composite.setLayout(new GridLayout(2, false));	
+		composite.setLayout(new GridLayout(4, false));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gridData.widthHint = 600;
-		gridData.heightHint = 200;
+		lblInfo = new Label(composite, SWT.NONE);
+		lblInfo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		lblInfo.setText(Messages.getString("info"));
 		
-		composite.setLayoutData(gridData);
+		Label lblParentEntry = new Label(composite, SWT.NONE);
+		lblParentEntry.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblParentEntry.setText(Messages.getString("parent_entry"));
 		
-		Label info = new Label(composite, SWT.NONE);
-		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		info.setText("Seçili değerin altına kullanıcı ekleyebilirsiniz.");
+		combo = new Combo(composite, SWT.NONE);
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label nameLabel = new Label(composite, SWT.NONE);
-		nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		nameLabel.setText("Ad (cn) :");
+//		btnParent = new Button(composite, SWT.NONE);
+//		btnParent.setText(Messages.getString("parent"));
 		
-		textName = new Text(composite, SWT.BORDER);
-		GridData gd_textName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_textName.widthHint = 226;
-		textName.setLayoutData(gd_textName);
+		btnOpenLiderTree = new Button(composite, SWT.NONE);
+		btnOpenLiderTree.setText(Messages.getString("tree"));
 		
-		Label surname = new Label(composite, SWT.NONE);
-		surname.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		surname.setText("Soyad (sn) :");
+		btnOpenLiderTree.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openLiderLdapTree();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
-		textSurname = new Text(composite, SWT.BORDER);
-		textSurname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label uid = new Label(composite, SWT.NONE);
-		uid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		uid.setText("Uid :");
-		
-		textUid = new Text(composite, SWT.BORDER);
-		textUid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label gid = new Label(composite, SWT.NONE);
-		gid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		gid.setText("Grup Id (gid) :");
-		
-		textGid = new Text(composite, SWT.BORDER);
-		textGid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	
-		Label uidNumber = new Label(composite, SWT.NONE);
-		uidNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		uidNumber.setText("Uid Number :");
-		
-		textUidNumber = new Text(composite, SWT.BORDER);
-		textUidNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label password = new Label(composite, SWT.NONE);
-		password.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		password.setText("Parola :");
-		
-		textPassword = new Text(composite, SWT.PASSWORD | SWT.BORDER);
-		textPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
 		
 		progressBar = new ProgressBar(composite, SWT.SMOOTH | SWT.INDETERMINATE);
 		progressBar.setSelection(0);
@@ -151,18 +135,24 @@ public class AddUserDialog extends DefaultLiderDialog {
 	
 	}
 	
+	
+	protected void openLiderLdapTree() {
+		
+		LiderLdapTreeDialog dialog= new  LiderLdapTreeDialog(this.getShell());
+		dialog.create();
+		if (dialog.open() == Window.OK) {
+		   String selectedDn= dialog.getSelectedEntryDn();
+		   combo.setText(selectedDn);
+		}
+		
+	}
+	
 	@Override
 	protected void okPressed() {
 
 		setReturnCode(OK);
-		if (
-				(textName != null && textName.getText().equals("") )
-				|| (textSurname != null && textSurname.getText().equals("") ) 
-				|| (textGid != null && textGid.getText().equals("")) 
-				|| (textUid != null && textUid.getText().equals("")) 
-				|| (textUidNumber != null && textUidNumber.getText().equals("")) 
-				|| (textPassword != null && textPassword.getText().equals("")) 
-				)
+		if (this.dn==null
+		)
 		{
 			Notifier.notifyandShow(null, "", Messages.getString("MANDATORY_FIELD"), "", NotifierTheme.ERROR_THEME);
 			return;
@@ -217,17 +207,11 @@ public class AddUserDialog extends DefaultLiderDialog {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("dn", dn);
-		map.put("cn",textName.getText());
-		map.put("gidNumber",textGid.getText());
-		map.put("sn",textSurname.getText());
-		map.put("uid",textUid.getText());
-		map.put("uidNumber", textUidNumber.getText());
-		map.put("password", textPassword.getText());
 		return map;
 	}
 
 	public String getCommandId() {
-		return "ADD_USER";
+		return "DELETE_USER";
 	}
 
 	public String getPluginName() {

@@ -39,6 +39,11 @@
             id="tr.org.liderahenk.liderconsole.commands.AddUser"            
             name="%command.task.adduser">
       </command>
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.DeleteUser"            
+            name="%command.task.deleteuser">
+      </command>
    </extension>
    
    <extension
@@ -110,6 +115,11 @@
        <handler
             class="tr.org.liderahenk.ldap.handlers.AddUserHandler"
             commandId="tr.org.liderahenk.liderconsole.commands.AddUser">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.DeleteUserHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.DeleteUser">
              
       </handler>
       
@@ -194,10 +204,12 @@
 		</menuContribution>
   </extension>
   
-	<!-- Add extension point contribution for "policy execution" dialogs -->
+	<!-- Add extension point contribution for "policy execution" dialogs
 	<extension
   		point="tr.org.liderahenk.liderconsole.core.policymenu">
   		<policyItem label="%command.profile" pluginName="ldap" pluginVersion="1.0.0" profileCommandId="tr.org.liderahenk.liderconsole.commands.LdapProfile" />
   	</extension>
+  	
+  	 -->
   	
 </plugin>
