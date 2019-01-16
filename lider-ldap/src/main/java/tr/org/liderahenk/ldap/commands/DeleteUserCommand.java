@@ -55,13 +55,13 @@ public class DeleteUserCommand implements ICommand {
 			List<LdapEntry> deletedOu = ldapService.search(ldapService.getDomainEntry().getDistinguishedName(),
 					filterAttributesList, null);
 
-			String ouDn = "ou=" + removedFileName + "," + configurationService.getAgentLdapBaseDn();
+			String ouDn = "ou=" + removedFileName + "," + configurationService.getUserLdapBaseDn();
 
 			if (deletedOu == null || (deletedOu!=null && deletedOu.isEmpty())) {
 				Map<String, String[]> ouMap = new HashMap<String, String[]>();
 				ouMap.put("objectClass", new String[] { "top", "organizationalUnit" });
 				ouMap.put("ou", new String[] { removedFileName });
-				ouMap.put("description", new String[] { "pardusDeviceGroup" });
+				ouMap.put("description", new String[] { "pardusRecycleOu" });
 
 				ldapService.addEntry(ouDn, ouMap);
 				ldapService.moveEntry(dn, ouDn);

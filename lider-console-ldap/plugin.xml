@@ -44,6 +44,11 @@
             id="tr.org.liderahenk.liderconsole.commands.DeleteUser"            
             name="%command.task.deleteuser">
       </command>
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.MoveUser"            
+            name="%command.task.deleteuser">
+      </command>
    </extension>
    
    <extension
@@ -120,6 +125,11 @@
        <handler
             class="tr.org.liderahenk.ldap.handlers.DeleteUserHandler"
             commandId="tr.org.liderahenk.liderconsole.commands.DeleteUser">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.MoveUserHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.MoveUser">
              
       </handler>
       

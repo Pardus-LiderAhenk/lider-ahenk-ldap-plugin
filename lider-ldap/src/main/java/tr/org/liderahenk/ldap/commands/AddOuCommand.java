@@ -37,7 +37,7 @@ public class AddOuCommand implements ICommand {
 		try {
 			
 			Map<String, String[]> attributes = new HashMap<String, String[]>();
-			attributes.put("objectClass", new String[] { "top", "organizationalUnit" });
+			attributes.put("objectClass", new String[] { "top", "organizationalUnit" , "pardusLider"});
 			attributes.put("ou", new String[] { ouName });
 			if(!"".equals(desc))
 			attributes.put("description", new String[] { desc });

@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -205,13 +204,17 @@ public class MoveUserDialog extends DefaultLiderDialog {
 	
 	public Map<String, Object> getParameterMap() {
 		
+		String newParentDn=combo.getText();
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("dn", dn);
+		map.put("newParentDn", newParentDn);
+		
 		return map;
 	}
 
 	public String getCommandId() {
-		return "DELETE_USER";
+		return "MOVE_USER";
 	}
 
 	public String getPluginName() {

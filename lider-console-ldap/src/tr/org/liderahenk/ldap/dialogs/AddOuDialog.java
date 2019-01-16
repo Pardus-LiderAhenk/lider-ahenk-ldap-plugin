@@ -82,14 +82,14 @@ public class AddOuDialog extends DefaultLiderDialog {
 		
 		Label ouNmaeLabel = new Label(composite, SWT.NONE);
 		ouNmaeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		ouNmaeLabel.setText("Klasör Adı :");
+		ouNmaeLabel.setText(Messages.getString("ou_name"));
 		
 		text = new Text(composite, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label descLabel = new Label(composite, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		descLabel.setText("Tanımlama :");
+		descLabel.setText(Messages.getString("description"));
 		
 		textDesc = new Text(composite, SWT.BORDER);
 		textDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -132,8 +132,11 @@ public class AddOuDialog extends DefaultLiderDialog {
 				IResponse response = TaskRestUtils.execute(task);
 				
 				if (response != null && response.getStatus() == RestResponseStatus.OK) {
-					Notifier.success(null, Messages.getString("TASK_EXECUTED"));
-				} else if (response != null && response.getStatus() == RestResponseStatus.ERROR) {
+					Notifier.notifyandShow(null, 
+							"", 
+							Messages.getString("TASK_RESULT"), 
+							Messages.getString("SUCCESS_ON_EXECUTE"), NotifierTheme.SUCCESS_THEME);
+					} else if (response != null && response.getStatus() == RestResponseStatus.ERROR) {
 					if (response.getMessages() != null && !response.getMessages().isEmpty()) {
 						Notifier.error(null, Messages.getString("ERROR_ON_EXECUTE"),
 								StringUtils.join(response.getMessages(), ""));
