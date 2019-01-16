@@ -4,10 +4,10 @@
 
 def info():
     inf = dict()
-    inf['name'] = 'lider-core'
+    inf['name'] = 'ldap'
     inf['version'] = '1.0.0'
     inf['support'] = 'debian'
-    inf['description'] = ''
+    inf['description'] = 'Ldap management'
     inf['task'] = True
     inf['user_oriented'] = True
     inf['machine_oriented'] = True
