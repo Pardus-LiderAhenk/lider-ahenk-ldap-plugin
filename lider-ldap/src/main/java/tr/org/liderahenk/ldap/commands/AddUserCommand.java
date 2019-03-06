@@ -55,7 +55,7 @@ public class AddUserCommand implements ICommand {
 			attributes.put("loginShell", new String[] { "/bin/bash" });
 			attributes.put("userPassword", new String[] { password });
 			
-			dn="cn="+cn+","+dn;
+			dn="uid="+uid+","+dn;
 			
 			ldapService.addEntry(dn, attributes);
 			

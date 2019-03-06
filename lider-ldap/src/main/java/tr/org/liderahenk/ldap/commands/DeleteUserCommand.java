@@ -12,6 +12,7 @@ import tr.org.liderahenk.lider.core.api.configuration.IConfigurationService;
 import tr.org.liderahenk.lider.core.api.ldap.ILDAPService;
 import tr.org.liderahenk.lider.core.api.ldap.LdapSearchFilterAttribute;
 import tr.org.liderahenk.lider.core.api.ldap.enums.SearchFilterEnum;
+import tr.org.liderahenk.lider.core.api.ldap.exceptions.LdapException;
 import tr.org.liderahenk.lider.core.api.ldap.model.LdapEntry;
 import tr.org.liderahenk.lider.core.api.log.IOperationLogService;
 import tr.org.liderahenk.lider.core.api.plugin.ICommand;
@@ -37,7 +38,19 @@ public class DeleteUserCommand implements ICommand {
 		Map<String, Object> params= context.getRequest().getParameterMap();
 	
 		String dn= (String) params.get("dn");
+		try {
+			ldapService.deleteEntry(dn);
+		} catch (LdapException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//moveEntry(dn);
 		
+		return resultFactory.create(CommandResultStatus.OK, new ArrayList<String>(), this);
+	}
+
+
+	private void moveEntry(String dn) {
 		try {
 
 			List<LdapSearchFilterAttribute> filterAttributesList = new ArrayList<LdapSearchFilterAttribute>();
@@ -75,8 +88,6 @@ public class DeleteUserCommand implements ICommand {
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
-		
-		return resultFactory.create(CommandResultStatus.OK, new ArrayList<String>(), this);
 	}
 	
 	
