@@ -38,7 +38,7 @@ public class AddUserCommand implements ICommand {
 		String uid= (String) params.get("uid");
 		String uidNumber= (String) params.get("uidNumber");
 		String password= (String) params.get("password");
-		String home="/home/"+cn;
+		String home="/home/"+uid;
 		
 		
 		try {
