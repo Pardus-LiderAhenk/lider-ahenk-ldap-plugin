@@ -9,12 +9,17 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -29,11 +34,9 @@ import tr.org.liderahenk.liderconsole.core.rest.enums.RestResponseStatus;
 import tr.org.liderahenk.liderconsole.core.rest.requests.TaskRequest;
 import tr.org.liderahenk.liderconsole.core.rest.responses.IResponse;
 import tr.org.liderahenk.liderconsole.core.rest.utils.TaskRestUtils;
-import tr.org.liderahenk.liderconsole.core.utils.SWTResourceManager;
 import tr.org.liderahenk.liderconsole.core.widgets.LiderConfirmBox;
 import tr.org.liderahenk.liderconsole.core.widgets.Notifier;
 import tr.org.liderahenk.liderconsole.core.widgets.NotifierColorsFactory.NotifierTheme;
-import org.eclipse.swt.custom.CLabel;
 
 /**
  * Task execution dialog for ldap plugin.
@@ -41,127 +44,294 @@ import org.eclipse.swt.custom.CLabel;
  */
 public class AddUserDialog extends DefaultLiderDialog {
 
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddUserDialog.class);
-	
-	
+
+
 	private String dn;
-	
+
 	private Text textName;
 	private Text textSurname;
 	private ProgressBar progressBar;
 
-
 	private Text textUid;
-
-
 	private Text textGid;
-
-
 	private Text textUidNumber;
-
-
 	private Text textPassword;
-	
+
+	private Button btnUIDNumberIncrease;
+	private Button btnUIDNumberDecrease;
+
+	private Button btnGIDNumberIncrease;
+	private Button btnGIDNumberDecrease;
 	public AddUserDialog(Shell parentShell, String dn) {
 		super(parentShell);
 		this.dn=dn;
 	}
-	
+
 	@Override
 	public void create() {
 		super.create();
 	}
-	
+
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(Messages.getString("add_user"));
 	}
-	
-	
+
+
 	public Control createDialogArea(Composite parent) {
 
-		Composite composite = new Composite(parent, SWT.BORDER);
-		composite.setLayout(new GridLayout(3, false));	
-		
-		GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gridData.widthHint = 600;
-		gridData.heightHint = 200;
-		
-		composite.setLayoutData(gridData);
-		
-		Composite composite_1 = new Composite(composite, SWT.NONE);
-		composite_1.setLayout(new GridLayout(1, false));
-		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 8));
-		
-		CLabel lblNewLabel = new CLabel(composite_1, SWT.NONE);
-		lblNewLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		lblNewLabel.setImage(SWTResourceManager.createImageFromFile("icons/64/user_add.png"));
-		
+		Composite composite = new Composite(parent, GridData.FILL);
+		composite.setLayout(new GridLayout(1, false));
+
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 100;
+		composite.setLayout(gridLayout);
+
+		GridData data= new GridData(SWT.FILL, SWT.FILL, true, true,1,1);
+		data.widthHint=600;
+		data.heightHint=240;
+
+		composite.setLayoutData(data);
+
+		//File Path Label
 		Label info = new Label(composite, SWT.NONE);
-		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		info.setText("Seçili değerin altına kullanıcı ekleyebilirsiniz.");
-		
+		GridData gridData = new GridData(GridData.FILL, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 100;
+		info.setLayoutData(gridData);
+		info.setText("Seçili değerin altına kullanıcı ekleyebilirsiniz."); //$NON-NLS-1$
+
 		Label nameLabel = new Label(composite, SWT.NONE);
-		nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		nameLabel.setText("Ad (cn) :");
-		
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		nameLabel.setLayoutData(gridData);
+		nameLabel.setText("Ad (cn) :"); //$NON-NLS-1$
+
 		textName = new Text(composite, SWT.BORDER);
-		GridData gd_textName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textName.widthHint = 226;
-		textName.setLayoutData(gd_textName);
-		
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 90;
+		gridData.heightHint = 20;
+		textName.setLayoutData(gridData);
+
 		Label surname = new Label(composite, SWT.NONE);
-		surname.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		surname.setText("Soyad (sn) :");
-		
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		surname.setLayoutData(gridData);
+		surname.setText("Soyad (sn) :"); //$NON-NLS-1$
+
 		textSurname = new Text(composite, SWT.BORDER);
-		textSurname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 90;
+		gridData.heightHint = 20;
+		textSurname.setLayoutData(gridData);
+
 		Label uid = new Label(composite, SWT.NONE);
-		uid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		uid.setLayoutData(gridData);
 		uid.setText("Uid :");
-		
+
 		textUid = new Text(composite, SWT.BORDER);
-		textUid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 90;
+		gridData.heightHint = 20;
+		textUid.setLayoutData(gridData);
+
 		Label gid = new Label(composite, SWT.NONE);
-		gid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		gid.setLayoutData(gridData);
 		gid.setText("Grup Id (gid) :");
-		
+
 		textGid = new Text(composite, SWT.BORDER);
-		textGid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-	
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 80;
+		gridData.heightHint = 20;
+		textGid.setLayoutData(gridData);
+		textGid.setText("0");
+		textGid.addListener(SWT.Verify, new Listener() {
+			public void handleEvent(Event e) {
+				String string = e.text;
+				char[] chars = new char[string.length()];
+				string.getChars(0, chars.length, chars, 0);
+				for (int i = 0; i < chars.length; i++) {
+					if (!('0' <= chars[i] && chars[i] <= '9')) {
+						e.doit = false;
+						return;
+					}
+				}
+			}
+		});
+
+		btnGIDNumberIncrease = new Button(composite, SWT.CENTER);
+		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 5;
+		gridData.heightHint = 20;
+		btnGIDNumberIncrease.setText("+");
+		btnGIDNumberIncrease.setLayoutData(gridData);
+		btnGIDNumberIncrease.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(textGid.getText().equals("")) {
+					textGid.setText("0");
+				}
+				else {
+					int gidNumber = Integer.valueOf(textGid.getText().toString());
+					textGid.setText(String.valueOf(gidNumber+1));
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+
+			}
+		});
+
+		btnGIDNumberDecrease = new Button(composite, SWT.CENTER);
+		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 5;
+		gridData.heightHint = 20;
+		btnGIDNumberDecrease.setText("-");
+		btnGIDNumberDecrease.setLayoutData(gridData);
+		btnGIDNumberDecrease.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(textGid.getText().equals("")) {
+					textGid.setText("0");
+				}
+				else {
+					int gidNumber = Integer.valueOf(textGid.getText().toString());
+					gidNumber = gidNumber -1;
+					if(gidNumber <= 0) {
+						textGid.setText("0");
+					}
+					else {
+						textGid.setText(String.valueOf(gidNumber));
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+
+			}
+		});
+
 		Label uidNumber = new Label(composite, SWT.NONE);
-		uidNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		uidNumber.setLayoutData(gridData);
 		uidNumber.setText("Uid Number :");
-		
+
 		textUidNumber = new Text(composite, SWT.BORDER);
-		textUidNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 80;
+		gridData.heightHint = 20;
+		textUidNumber.setLayoutData(gridData);
+		textUidNumber.setText("6000");
+		textUidNumber.addListener(SWT.Verify, new Listener() {
+			public void handleEvent(Event e) {
+				String string = e.text;
+				char[] chars = new char[string.length()];
+				string.getChars(0, chars.length, chars, 0);
+				for (int i = 0; i < chars.length; i++) {
+					if (!('0' <= chars[i] && chars[i] <= '9')) {
+						e.doit = false;
+						return;
+					}
+				}
+			}
+		});
+
+		btnUIDNumberIncrease = new Button(composite, SWT.CENTER);
+		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 5;
+		gridData.heightHint = 20;
+		btnUIDNumberIncrease.setText("+");
+		btnUIDNumberIncrease.setLayoutData(gridData);
+		btnUIDNumberIncrease.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(textUidNumber.getText().equals("")) {
+					textUidNumber.setText("0");
+				}
+				else {
+					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
+					textUidNumber.setText(String.valueOf(uidNumber+1));
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+
+			}
+		});
+
+
+		btnUIDNumberDecrease = new Button(composite, SWT.CENTER);
+		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 5;
+		gridData.heightHint = 20;
+		btnUIDNumberDecrease.setText("-");
+		btnUIDNumberDecrease.setLayoutData(gridData);
+		btnUIDNumberDecrease.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(textUidNumber.getText().equals("")) {
+					textUidNumber.setText("0");
+				}
+				else {
+					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
+					uidNumber = uidNumber -1;
+					if(uidNumber <= 0) {
+						textUidNumber.setText("0");
+					}
+					else {
+						textUidNumber.setText(String.valueOf(uidNumber));
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+
+			}
+		});
 		Label password = new Label(composite, SWT.NONE);
-		password.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		password.setLayoutData(gridData);
 		password.setText("Parola :");
-		
+
 		textPassword = new Text(composite, SWT.PASSWORD | SWT.BORDER);
-		textPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 90;
+		gridData.heightHint = 20;
+		textPassword.setLayoutData(gridData);
+
 		progressBar = new ProgressBar(composite, SWT.SMOOTH | SWT.INDETERMINATE);
+		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		progressBar.setSelection(0);
 		progressBar.setMaximum(100);
-		GridData gdProgress = new GridData(GridData.FILL_HORIZONTAL);
-		gdProgress.grabExcessHorizontalSpace = false;
-		gdProgress.grabExcessVerticalSpace = true;
-		gdProgress.horizontalSpan = 2;
-		gdProgress.heightHint = 10;
-		progressBar.setLayoutData(gdProgress);
+		gridData.horizontalSpan = 100;
+		gridData.heightHint = 10;
+		gridData.grabExcessVerticalSpace = true;
+		progressBar.setLayoutData(gridData);
 		progressBar.setVisible(false);
-		
+
 		return composite;
-	
 	}
-	
+
 	@Override
 	protected void okPressed() {
 
@@ -186,9 +356,9 @@ public class AddUserDialog extends DefaultLiderDialog {
 
 				TaskRequest task = new TaskRequest(getDnSet(), DNType.USER, getPluginName(), getPluginVersion(),
 						getCommandId(), getParameterMap(), null, null, new Date());
-				
+
 				IResponse response = TaskRestUtils.execute(task);
-				
+
 				if (response != null && response.getStatus() == RestResponseStatus.OK) {
 					Notifier.success(null, Messages.getString("TASK_EXECUTED"));
 				} else if (response != null && response.getStatus() == RestResponseStatus.ERROR) {
@@ -200,7 +370,7 @@ public class AddUserDialog extends DefaultLiderDialog {
 					}
 				}
 				progressBar.setVisible(false);
-				
+
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
 			} catch (Exception e1) {
 				progressBar.setVisible(false);
@@ -210,12 +380,12 @@ public class AddUserDialog extends DefaultLiderDialog {
 		}
 
 	}
-	
+
 	@Override
 	protected void cancelPressed() {
 		close();
 	}
-	
+
 	private List<String> getDnSet() {
 
 		List<String> dnList = new ArrayList<>();
@@ -223,9 +393,9 @@ public class AddUserDialog extends DefaultLiderDialog {
 
 		return dnList;
 	}
-	
+
 	public Map<String, Object> getParameterMap() {
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("dn", dn);
 		map.put("cn",textName.getText());
@@ -249,5 +419,5 @@ public class AddUserDialog extends DefaultLiderDialog {
 		return LdapConstants.PLUGIN_VERSION;
 	}
 
-	
+
 }
