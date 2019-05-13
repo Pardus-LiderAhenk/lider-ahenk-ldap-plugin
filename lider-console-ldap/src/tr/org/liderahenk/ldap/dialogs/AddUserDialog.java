@@ -29,9 +29,11 @@ import tr.org.liderahenk.liderconsole.core.rest.enums.RestResponseStatus;
 import tr.org.liderahenk.liderconsole.core.rest.requests.TaskRequest;
 import tr.org.liderahenk.liderconsole.core.rest.responses.IResponse;
 import tr.org.liderahenk.liderconsole.core.rest.utils.TaskRestUtils;
+import tr.org.liderahenk.liderconsole.core.utils.SWTResourceManager;
 import tr.org.liderahenk.liderconsole.core.widgets.LiderConfirmBox;
 import tr.org.liderahenk.liderconsole.core.widgets.Notifier;
 import tr.org.liderahenk.liderconsole.core.widgets.NotifierColorsFactory.NotifierTheme;
+import org.eclipse.swt.custom.CLabel;
 
 /**
  * Task execution dialog for ldap plugin.
@@ -80,13 +82,21 @@ public class AddUserDialog extends DefaultLiderDialog {
 	public Control createDialogArea(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.BORDER);
-		composite.setLayout(new GridLayout(2, false));	
+		composite.setLayout(new GridLayout(3, false));	
 		
 		GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gridData.widthHint = 600;
 		gridData.heightHint = 200;
 		
 		composite.setLayoutData(gridData);
+		
+		Composite composite_1 = new Composite(composite, SWT.NONE);
+		composite_1.setLayout(new GridLayout(1, false));
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 8));
+		
+		CLabel lblNewLabel = new CLabel(composite_1, SWT.NONE);
+		lblNewLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lblNewLabel.setImage(SWTResourceManager.createImageFromFile("icons/64/user_add.png"));
 		
 		Label info = new Label(composite, SWT.NONE);
 		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -97,7 +107,7 @@ public class AddUserDialog extends DefaultLiderDialog {
 		nameLabel.setText("Ad (cn) :");
 		
 		textName = new Text(composite, SWT.BORDER);
-		GridData gd_textName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		GridData gd_textName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_textName.widthHint = 226;
 		textName.setLayoutData(gd_textName);
 		
@@ -106,41 +116,42 @@ public class AddUserDialog extends DefaultLiderDialog {
 		surname.setText("Soyad (sn) :");
 		
 		textSurname = new Text(composite, SWT.BORDER);
-		textSurname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textSurname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Label uid = new Label(composite, SWT.NONE);
 		uid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		uid.setText("Uid :");
 		
 		textUid = new Text(composite, SWT.BORDER);
-		textUid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textUid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Label gid = new Label(composite, SWT.NONE);
 		gid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		gid.setText("Grup Id (gid) :");
 		
 		textGid = new Text(composite, SWT.BORDER);
-		textGid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textGid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 	
 		Label uidNumber = new Label(composite, SWT.NONE);
 		uidNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		uidNumber.setText("Uid Number :");
 		
 		textUidNumber = new Text(composite, SWT.BORDER);
-		textUidNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textUidNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Label password = new Label(composite, SWT.NONE);
 		password.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		password.setText("Parola :");
 		
 		textPassword = new Text(composite, SWT.PASSWORD | SWT.BORDER);
-		textPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		
 		progressBar = new ProgressBar(composite, SWT.SMOOTH | SWT.INDETERMINATE);
 		progressBar.setSelection(0);
 		progressBar.setMaximum(100);
 		GridData gdProgress = new GridData(GridData.FILL_HORIZONTAL);
+		gdProgress.grabExcessHorizontalSpace = false;
 		gdProgress.grabExcessVerticalSpace = true;
 		gdProgress.horizontalSpan = 2;
 		gdProgress.heightHint = 10;
