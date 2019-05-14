@@ -73,21 +73,13 @@ public class AddOuDialog extends DefaultLiderTitleAreaDialog {
 	public Control createDialogArea(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.BORDER);
-		composite.setLayout(new GridLayout(3, false));	
+		composite.setLayout(new GridLayout(2, false));	
 		
 		GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gridData.widthHint = 600;
 		gridData.heightHint = 200;
 		
 		composite.setLayoutData(gridData);
-		
-		Composite compositeOu = new Composite(composite, SWT.NONE);
-		compositeOu.setLayout(new GridLayout(1, false));
-		compositeOu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
-		
-		CLabel lblImage = new CLabel(compositeOu, SWT.NONE);
-		lblImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		lblImage.setImage(SWTResourceManager.createImageFromFile("icons/64/add_folder.jpeg"));
 		
 //		Label info = new Label(composite, SWT.NONE);
 //		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -106,8 +98,6 @@ public class AddOuDialog extends DefaultLiderTitleAreaDialog {
 		
 		textDesc = new Text(composite, SWT.BORDER);
 		textDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		return composite;
 	
