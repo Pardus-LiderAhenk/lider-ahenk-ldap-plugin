@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import tr.org.liderahenk.ldap.constants.LdapConstants;
 import tr.org.liderahenk.ldap.i18n.Messages;
-import tr.org.liderahenk.liderconsole.core.dialogs.DefaultLiderDialog;
+import tr.org.liderahenk.liderconsole.core.dialogs.DefaultLiderTitleAreaDialog;
 import tr.org.liderahenk.liderconsole.core.ldap.enums.DNType;
 import tr.org.liderahenk.liderconsole.core.rest.enums.RestResponseStatus;
 import tr.org.liderahenk.liderconsole.core.rest.requests.TaskRequest;
@@ -42,7 +43,7 @@ import tr.org.liderahenk.liderconsole.core.widgets.NotifierColorsFactory.Notifie
  * Task execution dialog for ldap plugin.
  * 
  */
-public class AddUserDialog extends DefaultLiderDialog {
+public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 
 
 	private static final Logger logger = LoggerFactory.getLogger(AddUserDialog.class);
@@ -64,6 +65,7 @@ public class AddUserDialog extends DefaultLiderDialog {
 
 	private Button btnGIDNumberIncrease;
 	private Button btnGIDNumberDecrease;
+	
 	public AddUserDialog(Shell parentShell, String dn) {
 		super(parentShell);
 		this.dn=dn;
@@ -72,11 +74,13 @@ public class AddUserDialog extends DefaultLiderDialog {
 	@Override
 	public void create() {
 		super.create();
+		setTitle(Messages.getString("add_user"));
+        setMessage("Seçilen kayda kullanıcı ekleyebilirsiniz.", IMessageProvider.INFORMATION);
 	}
 
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(Messages.getString("add_user"));
+		//shell.setText(Messages.getString("add_user"));
 	}
 
 
@@ -96,11 +100,13 @@ public class AddUserDialog extends DefaultLiderDialog {
 		composite.setLayoutData(data);
 
 		//File Path Label
-		Label info = new Label(composite, SWT.NONE);
+		
 		GridData gridData = new GridData(GridData.FILL, GridData.CENTER, true, false);
 		gridData.horizontalSpan = 100;
-		info.setLayoutData(gridData);
-		info.setText("Seçili değerin altına kullanıcı ekleyebilirsiniz."); //$NON-NLS-1$
+		
+//		Label info = new Label(composite, SWT.NONE);
+//		info.setLayoutData(gridData);
+//		info.setText("Seçili değerin altına kullanıcı ekleyebilirsiniz."); //$NON-NLS-1$
 
 		Label nameLabel = new Label(composite, SWT.NONE);
 		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);

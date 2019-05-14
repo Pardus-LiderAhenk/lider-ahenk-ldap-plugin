@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,20 +25,23 @@ import org.slf4j.LoggerFactory;
 import tr.org.liderahenk.ldap.constants.LdapConstants;
 import tr.org.liderahenk.ldap.i18n.Messages;
 import tr.org.liderahenk.liderconsole.core.dialogs.DefaultLiderDialog;
+import tr.org.liderahenk.liderconsole.core.dialogs.DefaultLiderTitleAreaDialog;
 import tr.org.liderahenk.liderconsole.core.ldap.enums.DNType;
 import tr.org.liderahenk.liderconsole.core.rest.enums.RestResponseStatus;
 import tr.org.liderahenk.liderconsole.core.rest.requests.TaskRequest;
 import tr.org.liderahenk.liderconsole.core.rest.responses.IResponse;
 import tr.org.liderahenk.liderconsole.core.rest.utils.TaskRestUtils;
+import tr.org.liderahenk.liderconsole.core.utils.SWTResourceManager;
 import tr.org.liderahenk.liderconsole.core.widgets.LiderConfirmBox;
 import tr.org.liderahenk.liderconsole.core.widgets.Notifier;
 import tr.org.liderahenk.liderconsole.core.widgets.NotifierColorsFactory.NotifierTheme;
+import org.eclipse.swt.custom.CLabel;
 
 /**
  * Task execution dialog for ldap plugin.
  * 
  */
-public class AddOuDialog extends DefaultLiderDialog {
+public class AddOuDialog extends DefaultLiderTitleAreaDialog {
 
 	
 	private static final Logger logger = LoggerFactory.getLogger(AddOuDialog.class);
@@ -47,7 +51,6 @@ public class AddOuDialog extends DefaultLiderDialog {
 	
 	private Text text;
 	private Text textDesc;
-	private ProgressBar progressBar;
 	
 	public AddOuDialog(Shell parentShell, String dn) {
 		super(parentShell);
@@ -57,6 +60,8 @@ public class AddOuDialog extends DefaultLiderDialog {
 	@Override
 	public void create() {
 		super.create();
+		setTitle(Messages.getString("add_ou"));
+        setMessage("Seçilen kayda organizasyon birimi ekleyebilirsiniz.", IMessageProvider.INFORMATION);
 	}
 	
 	protected void configureShell(Shell shell) {
@@ -68,7 +73,7 @@ public class AddOuDialog extends DefaultLiderDialog {
 	public Control createDialogArea(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.BORDER);
-		composite.setLayout(new GridLayout(2, false));	
+		composite.setLayout(new GridLayout(3, false));	
 		
 		GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gridData.widthHint = 600;
@@ -76,9 +81,17 @@ public class AddOuDialog extends DefaultLiderDialog {
 		
 		composite.setLayoutData(gridData);
 		
-		Label info = new Label(composite, SWT.NONE);
-		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		info.setText("Seçili değerin altına klasör ekleyebilirsiniz.");
+		Composite compositeOu = new Composite(composite, SWT.NONE);
+		compositeOu.setLayout(new GridLayout(1, false));
+		compositeOu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+		
+		CLabel lblImage = new CLabel(compositeOu, SWT.NONE);
+		lblImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		lblImage.setImage(SWTResourceManager.createImageFromFile("icons/64/add_folder.jpeg"));
+		
+//		Label info = new Label(composite, SWT.NONE);
+//		info.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+//		info.setText("SeÃ§ili deÄerin altÄ±na organizasyon birimi ekleyebilirsiniz.");
 		
 		Label ouNmaeLabel = new Label(composite, SWT.NONE);
 		ouNmaeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -93,17 +106,8 @@ public class AddOuDialog extends DefaultLiderDialog {
 		
 		textDesc = new Text(composite, SWT.BORDER);
 		textDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	
-		
-		progressBar = new ProgressBar(composite, SWT.SMOOTH | SWT.INDETERMINATE);
-		progressBar.setSelection(0);
-		progressBar.setMaximum(100);
-		GridData gdProgress = new GridData(GridData.FILL_HORIZONTAL);
-		gdProgress.grabExcessVerticalSpace = true;
-		gdProgress.horizontalSpan = 2;
-		gdProgress.heightHint = 10;
-		progressBar.setLayoutData(gdProgress);
-		progressBar.setVisible(false);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		return composite;
 	
@@ -124,7 +128,7 @@ public class AddOuDialog extends DefaultLiderDialog {
 		if (LiderConfirmBox.open(Display.getDefault().getActiveShell(), Messages.getString("TASK_EXEC_TITLE"),
 				Messages.getString("TASK_EXEC_MESSAGE"))) {
 			try {
-				progressBar.setVisible(true);
+				//progressBar.setVisible(true);
 
 				TaskRequest task = new TaskRequest(getDnSet(), DNType.USER, getPluginName(), getPluginVersion(),
 						getCommandId(), getParameterMap(), null, null, new Date());
@@ -144,11 +148,11 @@ public class AddOuDialog extends DefaultLiderDialog {
 						Notifier.error(null, Messages.getString("ERROR_ON_EXECUTE"));
 					}
 				}
-				progressBar.setVisible(false);
+			//	progressBar.setVisible(false);
 				
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
 			} catch (Exception e1) {
-				progressBar.setVisible(false);
+				//progressBar.setVisible(false);
 				logger.error(e1.getMessage(), e1);
 				Notifier.error(null, Messages.getString("ERROR_ON_EXECUTE"));
 			}
