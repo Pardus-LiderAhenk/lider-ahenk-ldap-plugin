@@ -49,6 +49,22 @@
             id="tr.org.liderahenk.liderconsole.commands.MoveUser"            
             name="%command.task.deleteuser">
       </command>
+      
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.AddAttribute"            
+            name="%command.task.addattribute">
+      </command>
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.UpdateAttribute"            
+            name="%command.task.updateattribute">
+      </command>
+      <command
+            categoryId="tr.org.liderahenk.liderconsole.commands.category"
+            id="tr.org.liderahenk.liderconsole.commands.DeleteAttribute"            
+            name="%command.task.deleteattribute">
+      </command>
    </extension>
    
    <extension
@@ -130,6 +146,21 @@
        <handler
             class="tr.org.liderahenk.ldap.handlers.MoveUserHandler"
             commandId="tr.org.liderahenk.liderconsole.commands.MoveUser">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.AddAttributeHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.AddAttribute">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.UpdateAttributeHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.UpdateAttribute">
+             
+      </handler>
+       <handler
+            class="tr.org.liderahenk.ldap.handlers.DeleteAttributeHandler"
+            commandId="tr.org.liderahenk.liderconsole.commands.DeleteAttribute">
              
       </handler>
       

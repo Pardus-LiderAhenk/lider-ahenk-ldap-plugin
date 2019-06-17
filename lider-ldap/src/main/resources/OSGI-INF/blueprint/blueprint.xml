@@ -94,6 +94,28 @@
 		<property name="logService" ref="logService" />
 		<property name="ldapService" ref="ldapService" />
 	</bean>
+	
+	<service ref="addAttribute" interface="tr.org.liderahenk.lider.core.api.plugin.ICommand" />
+	<bean id="addAttribute" class="tr.org.liderahenk.ldap.commands.AddAttributeCommand">
+		<property name="resultFactory" ref="resultFactory" />
+		<property name="pluginInfo" ref="pluginInfoImpl" />
+		<property name="logService" ref="logService" />
+		<property name="ldapService" ref="ldapService" />
+	</bean>
+	<service ref="deleteAttribute" interface="tr.org.liderahenk.lider.core.api.plugin.ICommand" />
+	<bean id="deleteAttribute" class="tr.org.liderahenk.ldap.commands.DeleteAttributeCommand">
+		<property name="resultFactory" ref="resultFactory" />
+		<property name="pluginInfo" ref="pluginInfoImpl" />
+		<property name="logService" ref="logService" />
+		<property name="ldapService" ref="ldapService" />
+	</bean>
+	<service ref="updateAttribute" interface="tr.org.liderahenk.lider.core.api.plugin.ICommand" />
+	<bean id="updateAttribute" class="tr.org.liderahenk.ldap.commands.UpdateAttributeCommand">
+		<property name="resultFactory" ref="resultFactory" />
+		<property name="pluginInfo" ref="pluginInfoImpl" />
+		<property name="logService" ref="logService" />
+		<property name="ldapService" ref="ldapService" />
+	</bean>
 
 	<reference id="pluginDbService" interface="tr.org.liderahenk.lider.core.api.persistence.IPluginDbService" />
 	<reference id="logService" interface="tr.org.liderahenk.lider.core.api.log.IOperationLogService" />
