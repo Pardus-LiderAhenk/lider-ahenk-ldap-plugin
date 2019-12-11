@@ -59,6 +59,7 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 	private Text textGid;
 	private Text textUidNumber;
 	private Text textPassword;
+	private Text textPasswordRepeat;
 
 	private Button btnUIDNumberIncrease;
 	private Button btnUIDNumberDecrease;
@@ -94,7 +95,7 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 		composite.setLayout(gridLayout);
 
 		GridData data= new GridData(SWT.FILL, SWT.FILL, true, true,1,1);
-		data.widthHint=600;
+		data.widthHint=650;
 		data.heightHint=240;
 
 		composite.setLayoutData(data);
@@ -324,7 +325,27 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 		gridData.horizontalSpan = 90;
 		gridData.heightHint = 20;
 		textPassword.setLayoutData(gridData);
+		
+		Label passwordRepeat = new Label(composite, SWT.NONE);
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 10;
+		gridData.heightHint = 20;
+		passwordRepeat.setLayoutData(gridData);
+		passwordRepeat.setText("Parola Tekrarı:");
 
+		textPasswordRepeat = new Text(composite, SWT.PASSWORD | SWT.BORDER);
+		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+		gridData.horizontalSpan = 90;
+		gridData.heightHint = 20;
+		textPasswordRepeat.setLayoutData(gridData);
+
+		Label passwordRule = new Label(composite, SWT.NONE);
+		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+		gridData.horizontalSpan = 100;
+		gridData.heightHint = 20;
+		passwordRule.setLayoutData(gridData);
+		passwordRule.setText(Messages.getString("PASSWORD_RULE"));
+		
 		progressBar = new ProgressBar(composite, SWT.SMOOTH | SWT.INDETERMINATE);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		progressBar.setSelection(0);
@@ -342,17 +363,24 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 	protected void okPressed() {
 
 		setReturnCode(OK);
-		if (
-				(textName != null && textName.getText().equals("") )
+		if ((textName != null && textName.getText().equals("") )
 				|| (textSurname != null && textSurname.getText().equals("") ) 
 				|| (textGid != null && textGid.getText().equals("")) 
 				|| (textUid != null && textUid.getText().equals("")) 
-				|| (textUidNumber != null && textUidNumber.getText().equals("")) 
-				|| (textPassword != null && textPassword.getText().equals("")) 
-				)
-		{
+				|| (textPassword != null && textPassword.getText().equals(""))
+				|| (textPasswordRepeat != null && textPasswordRepeat.getText().equals(""))) {
 			Notifier.notifyandShow(null, "", Messages.getString("MANDATORY_FIELD"), "", NotifierTheme.ERROR_THEME);
 			return;
+		} else {
+			if(!textPassword.getText().equals(textPasswordRepeat.getText())) {
+				Notifier.notifyandShow(null, "", Messages.getString("PASSWORDS_MISMATCH"), "", NotifierTheme.ERROR_THEME);
+				return;
+			} else {
+				if(!textPassword.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{10,}$")) {
+					Notifier.notifyandShow(null, "", Messages.getString("PASSWORD_RULE_ERROR"), "", NotifierTheme.ERROR_THEME);
+					return;
+				}
+			}
 		}
 
 		if (LiderConfirmBox.open(Display.getDefault().getActiveShell(), Messages.getString("TASK_EXEC_TITLE"),
@@ -408,7 +436,7 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 		map.put("gidNumber",textGid.getText());
 		map.put("sn",textSurname.getText());
 		map.put("uid",textUid.getText());
-		map.put("uidNumber", textUidNumber.getText());
+		//map.put("uidNumber", textUidNumber.getText());
 		map.put("password", textPassword.getText());
 		return map;
 	}

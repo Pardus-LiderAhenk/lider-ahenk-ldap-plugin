@@ -4,20 +4,20 @@ Binary: ahenk-ldap
 Architecture: amd64
 Version: 1.0.0
 Checksums-Md5:
- 5cfeadc55206408d1c7ffd9382535eb9 4616 ahenk-ldap_1.0.0_amd64.deb
+ 1d164d295ce68b244f0122bcb72c9186 4622 ahenk-ldap_1.0.0_amd64.deb
 Checksums-Sha1:
- c716feeb0dabf27bb6cd31369124364a22d54454 4616 ahenk-ldap_1.0.0_amd64.deb
+ 76433aa57a56c39a3a8b1ced82e96258f9901bb3 4622 ahenk-ldap_1.0.0_amd64.deb
 Checksums-Sha256:
- 5590590c25bfa46f995c3684b9aefae5049c48f831756444bf2121bf9d01b157 4616 ahenk-ldap_1.0.0_amd64.deb
+ fbc5c24a9f94e587340e18c45eb152944a497af87fa4639c9f40dc9a41e27add 4622 ahenk-ldap_1.0.0_amd64.deb
 Build-Origin: Pardus
 Build-Architecture: amd64
-Build-Date: Mon, 25 Feb 2019 17:20:42 +0300
+Build-Date: Wed, 11 Dec 2019 15:45:32 +0300
 Installed-Build-Depends:
  autoconf (= 2.69-10),
  automake (= 1:1.15-6),
  autopoint (= 0.19.8.1-2),
  autotools-dev (= 20161112.1),
- base-files (= 9.10pardus4),
+ base-files (= 10.1pardus1),
  base-passwd (= 3.5.43),
  bash (= 4.4-5pardus1),
  binutils (= 2.28-5),
@@ -30,13 +30,14 @@ Installed-Build-Depends:
  cpp-6 (= 6.3.0-18+deb9u1),
  dash (= 0.5.8-2.4),
  debconf (= 1.5.61),
- debhelper (= 10.2.5),
+ debhelper (= 11.5.3pardus2),
  debianutils (= 4.8.1.1),
- dh-autoreconf (= 14),
+ dh-autoreconf (= 17pardus1),
  dh-strip-nondeterminism (= 0.034-1),
  diffutils (= 1:3.5-3),
  dpkg (= 1.18.25),
  dpkg-dev (= 1.18.25),
+ dwz (= 0.12-1+b1),
  e2fslibs (= 1.43.4-2),
  e2fsprogs (= 1.43.4-2),
  file (= 1:5.30-1+deb9u2),
@@ -65,10 +66,10 @@ Installed-Build-Depends:
  libblkid1 (= 2.29.2-1+deb9u1),
  libbsd0 (= 0.8.3-1),
  libbz2-1.0 (= 1.0.6-8.1),
- libc-bin (= 2.24-11+deb9u3),
- libc-dev-bin (= 2.24-11+deb9u3),
- libc6 (= 2.24-11+deb9u3),
- libc6-dev (= 2.24-11+deb9u3),
+ libc-bin (= 2.24-11+deb9u4),
+ libc-dev-bin (= 2.24-11+deb9u4),
+ libc6 (= 2.24-11+deb9u4),
+ libc6-dev (= 2.24-11+deb9u4),
  libcap-ng0 (= 0.7.7-3+b1),
  libcc1-0 (= 6.3.0-18+deb9u1),
  libcilkrts5 (= 6.3.0-18+deb9u1),
@@ -77,6 +78,7 @@ Installed-Build-Depends:
  libdb5.3 (= 5.3.28-12+deb9u1),
  libdebconfclient0 (= 0.227),
  libdpkg-perl (= 1.18.25),
+ libelf1 (= 0.168-1),
  libfdisk1 (= 2.29.2-1+deb9u1),
  libffi6 (= 3.2.1-6),
  libfile-stripnondeterminism-perl (= 0.034-1),
@@ -87,7 +89,7 @@ Installed-Build-Depends:
  libglib2.0-0 (= 2.50.3-2),
  libgmp10 (= 2:6.1.2+dfsg-1),
  libgomp1 (= 6.3.0-18+deb9u1),
- libgpg-error0 (= 1.26-2),
+ libgpg-error0 (= 1.35-1~bpo9+1),
  libicu57 (= 57.1-6+deb9u2),
  libisl15 (= 0.18-1),
  libitm1 (= 6.3.0-18+deb9u1),
@@ -107,7 +109,7 @@ Installed-Build-Depends:
  libpam-runtime (= 1.1.8-3.6),
  libpam0g (= 1.1.8-3.6),
  libpcre3 (= 2:8.39-3),
- libperl5.24 (= 5.24.1-3+deb9u4),
+ libperl5.24 (= 5.24.1-3+deb9u5),
  libpipeline1 (= 1.4.1-2),
  libquadmath0 (= 6.3.0-18+deb9u1),
  libreadline7 (= 7.0-3),
@@ -120,32 +122,32 @@ Installed-Build-Depends:
  libss2 (= 1.43.4-2),
  libstdc++-6-dev (= 6.3.0-18+deb9u1),
  libstdc++6 (= 6.3.0-18+deb9u1),
- libsystemd0 (= 232-25+deb9u4),
+ libsystemd0 (= 241-1~bpo9+1),
  libtimedate-perl (= 2.3000-2),
  libtinfo5 (= 6.0+20161126-1+deb9u2),
  libtool (= 2.4.6-2),
  libtsan0 (= 6.3.0-18+deb9u1),
  libubsan0 (= 6.3.0-18+deb9u1),
- libudev1 (= 232-25+deb9u4),
+ libudev1 (= 241-1~bpo9+1),
  libunistring0 (= 0.9.6+really0.9.3-0.1),
  libustr-1.0-1 (= 1.0.4-6),
  libuuid1 (= 2.29.2-1+deb9u1),
  libxml2 (= 2.9.4+dfsg1-2.2+deb9u2),
- linux-libc-dev (= 4.9.110-3+deb9u4),
+ linux-libc-dev (= 4.9.144-3),
  login (= 1:4.4-4.1),
  m4 (= 1.4.18-1),
  make (= 4.1-9.1),
  man-db (= 2.7.6.1-2),
  mawk (= 1.3.3-17+b3),
  mount (= 2.29.2-1+deb9u1),
- multiarch-support (= 2.24-11+deb9u3),
+ multiarch-support (= 2.24-11+deb9u4),
  ncurses-base (= 6.0+20161126-1+deb9u2),
  ncurses-bin (= 6.0+20161126-1+deb9u2),
  passwd (= 1:4.4-4.1),
  patch (= 2.7.5-1+deb9u1),
- perl (= 5.24.1-3+deb9u4),
- perl-base (= 5.24.1-3+deb9u4),
- perl-modules-5.24 (= 5.24.1-3+deb9u4),
+ perl (= 5.24.1-3+deb9u5),
+ perl-base (= 5.24.1-3+deb9u5),
+ perl-modules-5.24 (= 5.24.1-3+deb9u5),
  po-debconf (= 1.0.20),
  readline-common (= 7.0-3),
  sed (= 4.4-1),
@@ -156,6 +158,6 @@ Installed-Build-Depends:
  xz-utils (= 5.2.2-1.2+b1),
  zlib1g (= 1:1.2.8.dfsg-5)
 Environment:
- DEB_BUILD_OPTIONS="parallel=1"
+ DEB_BUILD_OPTIONS="parallel=8"
  LANG="en_US.utf8"
- SOURCE_DATE_EPOCH="1551104437"
+ SOURCE_DATE_EPOCH="1576068327"
