@@ -36,7 +36,11 @@ public class AddUserCommand implements ICommand {
 		String gidNumber= (String) params.get("gidNumber");
 		String sn= (String) params.get("sn");
 		String uid= (String) params.get("uid");
-		String uidNumber= (String) params.get("uidNumber");
+		int randomInt = (int)(1000000.0 * Math.random());
+		
+		String uidNumber= Integer.toString(randomInt);
+		
+	//	String uidNumber= (String) params.get("uidNumber");
 		String password= (String) params.get("password");
 		String home="/home/"+uid;
 		

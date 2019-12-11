@@ -138,7 +138,7 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 		gridData.horizontalSpan = 10;
 		gridData.heightHint = 20;
 		uid.setLayoutData(gridData);
-		uid.setText("Uid :");
+		uid.setText("Kimlik (uid) :");
 
 		textUid = new Text(composite, SWT.BORDER);
 		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
@@ -158,7 +158,7 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 		gridData.horizontalSpan = 80;
 		gridData.heightHint = 20;
 		textGid.setLayoutData(gridData);
-		textGid.setText("0");
+		textGid.setText("6000");
 		textGid.addListener(SWT.Verify, new Listener() {
 			public void handleEvent(Event e) {
 				String string = e.text;
@@ -229,89 +229,89 @@ public class AddUserDialog extends DefaultLiderTitleAreaDialog {
 			}
 		});
 
-		Label uidNumber = new Label(composite, SWT.NONE);
-		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
-		gridData.horizontalSpan = 10;
-		gridData.heightHint = 20;
-		uidNumber.setLayoutData(gridData);
-		uidNumber.setText("Uid Number :");
-
-		textUidNumber = new Text(composite, SWT.BORDER);
-		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
-		gridData.horizontalSpan = 80;
-		gridData.heightHint = 20;
-		textUidNumber.setLayoutData(gridData);
-		textUidNumber.setText("6000");
-		textUidNumber.addListener(SWT.Verify, new Listener() {
-			public void handleEvent(Event e) {
-				String string = e.text;
-				char[] chars = new char[string.length()];
-				string.getChars(0, chars.length, chars, 0);
-				for (int i = 0; i < chars.length; i++) {
-					if (!('0' <= chars[i] && chars[i] <= '9')) {
-						e.doit = false;
-						return;
-					}
-				}
-			}
-		});
-
-		btnUIDNumberIncrease = new Button(composite, SWT.CENTER);
-		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
-		gridData.horizontalSpan = 5;
-		gridData.heightHint = 20;
-		btnUIDNumberIncrease.setText("+");
-		btnUIDNumberIncrease.setLayoutData(gridData);
-		btnUIDNumberIncrease.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if(textUidNumber.getText().equals("")) {
-					textUidNumber.setText("0");
-				}
-				else {
-					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
-					textUidNumber.setText(String.valueOf(uidNumber+1));
-				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-
-			}
-		});
-
-
-		btnUIDNumberDecrease = new Button(composite, SWT.CENTER);
-		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
-		gridData.horizontalSpan = 5;
-		gridData.heightHint = 20;
-		btnUIDNumberDecrease.setText("-");
-		btnUIDNumberDecrease.setLayoutData(gridData);
-		btnUIDNumberDecrease.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if(textUidNumber.getText().equals("")) {
-					textUidNumber.setText("0");
-				}
-				else {
-					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
-					uidNumber = uidNumber -1;
-					if(uidNumber <= 0) {
-						textUidNumber.setText("0");
-					}
-					else {
-						textUidNumber.setText(String.valueOf(uidNumber));
-					}
-				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-
-			}
-		});
+//		Label uidNumber = new Label(composite, SWT.NONE);
+//		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
+//		gridData.horizontalSpan = 10;
+//		gridData.heightHint = 20;
+//		uidNumber.setLayoutData(gridData);
+//		uidNumber.setText("Uid Number :");
+//
+//		textUidNumber = new Text(composite, SWT.BORDER);
+//		gridData = new GridData(SWT.FILL, GridData.FILL, true, false);
+//		gridData.horizontalSpan = 80;
+//		gridData.heightHint = 20;
+//		textUidNumber.setLayoutData(gridData);
+//		textUidNumber.setText("6000");
+//		textUidNumber.addListener(SWT.Verify, new Listener() {
+//			public void handleEvent(Event e) {
+//				String string = e.text;
+//				char[] chars = new char[string.length()];
+//				string.getChars(0, chars.length, chars, 0);
+//				for (int i = 0; i < chars.length; i++) {
+//					if (!('0' <= chars[i] && chars[i] <= '9')) {
+//						e.doit = false;
+//						return;
+//					}
+//				}
+//			}
+//		});
+//
+//		btnUIDNumberIncrease = new Button(composite, SWT.CENTER);
+//		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+//		gridData.horizontalSpan = 5;
+//		gridData.heightHint = 20;
+//		btnUIDNumberIncrease.setText("+");
+//		btnUIDNumberIncrease.setLayoutData(gridData);
+//		btnUIDNumberIncrease.addSelectionListener(new SelectionListener() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				if(textUidNumber.getText().equals("")) {
+//					textUidNumber.setText("0");
+//				}
+//				else {
+//					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
+//					textUidNumber.setText(String.valueOf(uidNumber+1));
+//				}
+//			}
+//
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//
+//			}
+//		});
+//
+//
+//		btnUIDNumberDecrease = new Button(composite, SWT.CENTER);
+//		gridData = new GridData(SWT.FILL, GridData.CENTER, true, false);
+//		gridData.horizontalSpan = 5;
+//		gridData.heightHint = 20;
+//		btnUIDNumberDecrease.setText("-");
+//		btnUIDNumberDecrease.setLayoutData(gridData);
+//		btnUIDNumberDecrease.addSelectionListener(new SelectionListener() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				if(textUidNumber.getText().equals("")) {
+//					textUidNumber.setText("0");
+//				}
+//				else {
+//					int uidNumber = Integer.valueOf(textUidNumber.getText().toString());
+//					uidNumber = uidNumber -1;
+//					if(uidNumber <= 0) {
+//						textUidNumber.setText("0");
+//					}
+//					else {
+//						textUidNumber.setText(String.valueOf(uidNumber));
+//					}
+//				}
+//			}
+//
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//
+//			}
+//		});
 		Label password = new Label(composite, SWT.NONE);
 		gridData = new GridData(SWT.RIGHT, GridData.CENTER, true, false);
 		gridData.horizontalSpan = 10;
